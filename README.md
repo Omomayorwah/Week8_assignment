@@ -5,7 +5,9 @@ Key Features of This Database Design:
 
 Proper Relationships:
 1-to-Many: Department → Students, Department → Courses, Department → Instructors
+
 Many-to-Many: Students ↔ Courses (via Enrollment), Courses ↔ Instructors (via Course Offering)
+
 1-to-1: Student ↔ Address
 
 Comprehensive Constraints:
