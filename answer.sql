@@ -69,9 +69,9 @@ CREATE TABLE enrollment (
     enrollment_date DATE NOT NULL DEFAULT (CURRENT_DATE),
     grade DECIMAL(3,2) CHECK (grade IS NULL OR (grade >= 0 AND grade <= 4.0)),
     UNIQUE (student_id, course_id, semester_id),
-    FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE,
-    FOREIGN KEY (semester_id) REFERENCES semester(semester_id) ON DELETE CASCADE
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (semester_id) REFERENCES semester(semester_id)
 );
 
 -- Course offering table (M-to-M between Course and Instructor)
@@ -84,9 +84,9 @@ CREATE TABLE course_offering (
     schedule VARCHAR(100) NOT NULL,
     capacity SMALLINT NOT NULL CHECK (capacity > 0),
     UNIQUE (course_id, instructor_id, semester_id),
-    FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE,
-    FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id) ON DELETE CASCADE,
-    FOREIGN KEY (semester_id) REFERENCES semester(semester_id) ON DELETE CASCADE
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id),
+    FOREIGN KEY (semester_id) REFERENCES semester(semester_id)
 );
 
 -- Address table (1-to-1 with Student)
@@ -97,7 +97,7 @@ CREATE TABLE student_address (
     state VARCHAR(50) NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     country VARCHAR(50) NOT NULL DEFAULT 'United States',
-    FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 
 -- Financial record table (1-to-Many with Student)
@@ -108,7 +108,7 @@ CREATE TABLE financial_record (
     amount DECIMAL(10,2) NOT NULL,
     transaction_type ENUM('Tuition', 'Scholarship', 'Fee', 'Refund') NOT NULL,
     description VARCHAR(200),
-    FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 
 -- Create indexes for performance
